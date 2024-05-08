@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toko_tanaman/common_widgets/simmer_widget.dart';
 import 'package:toko_tanaman/screens/detail_product.dart';
 import 'package:toko_tanaman/utils/collor_util.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage1 extends StatefulWidget {
+  const HomePage1({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage1> createState() => _HomePage1State();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePage1State extends State<HomePage1> {
   int selectedListCategory = 0;
   int lengData = 0;
   Future? future;
 
   List<String> listCategory = ["All", "Indoor", "Outdoor", "Hias", "Terapy", "Cactus"];
-
   @override
   void initState() {
-   future = getData(0);
+      future = getData(0);
     super.initState();
   }
-
-  Future<void> getData(int val) async {
-      await Future.delayed(const Duration(milliseconds: 500));
-      setState(() {
-        lengData = val == 0 ? 8 : val;
-      });
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
         leading: const Padding(
@@ -55,10 +52,11 @@ class _HomePageState extends State<HomePage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
+
               child: IconButton(
                 iconSize: 23,
                 highlightColor: const Color(0xffD9D9D9),
-                onPressed: (){}, 
+                onPressed: () {},
                 icon: const Icon(FontAwesomeIcons.bell), 
                 color: const Color(0xff344054),),
             )
@@ -153,11 +151,7 @@ class _HomePageState extends State<HomePage> {
               future: future, 
               builder: (context, snapshot) {
                 if(snapshot.connectionState == ConnectionState.waiting){
-                  return const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+                  return shimmerListDataHomePage();
                 }else if(snapshot.hasError){
                     return const Expanded(
                       child: Center(
@@ -218,13 +212,19 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-            )
-            ;
+            );
                 }
               },),
             ],
           ),
-          )),
+          ))
     );
   }
+    Future<void> getData(int val) async {
+      await Future.delayed(const Duration(seconds: 2));
+      setState(() {
+        lengData = val == 0 ? 8 : val;
+      });
+  }
+
 }

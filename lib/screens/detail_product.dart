@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:toko_tanaman/screens/home_page.dart';
+import 'package:toko_tanaman/screens/main_page.dart';
 
 class DetailProduct extends StatefulWidget {
   final int index;
